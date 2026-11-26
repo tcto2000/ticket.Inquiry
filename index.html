@@ -113,6 +113,9 @@ const $ = id => document.getElementById(id);
 $('btn').addEventListener('click', go);
 $('name').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) go(); });
 
+// 預熱：開頁時先喚醒後端並載入快取，第一次查詢會比較快
+fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: '{"warm":1}' }).catch(() => {});
+
 async function go() {
   const name = $('name').value.trim();
   const btn = $('btn');
